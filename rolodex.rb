@@ -1,12 +1,6 @@
 class Rolodex
   attr_reader :contacts
 
-  def self.attr_reader(name)
-      def #{name}
-        @#{name}
-      end
-  end
-
   def contacts=(value)
     @contacts = value
   end
@@ -57,7 +51,6 @@ class Rolodex
         puts "That is an invalid attribute."
       end
   end
-  # Question: WHy can't I run contact.attribute?
 
   def delete_contact(contact_id)
     @contacts.delete_if do |contact|
