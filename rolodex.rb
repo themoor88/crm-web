@@ -1,10 +1,6 @@
 class Rolodex
   attr_reader :contacts
 
-  def contacts=(value)
-    @contacts = value
-  end
-
   def initialize
     @contacts = []
     @id = 1
