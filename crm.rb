@@ -1,5 +1,5 @@
-require_relative 'contact'
-require_relative 'rolodex'
+# require_relative 'contact'
+# require_relative 'rolodex'
 require 'sinatra'
 require 'data_mapper'
 
@@ -9,10 +9,11 @@ class Contact
   include DataMapper::Resource
 
   property :id, Serial
-  property :first_name, Serial
-  property :last_name, Serial
-  property :email, Serial
-  property :notes, Serial
+  property :first_name, String
+  property :last_name, String
+  property :email, String
+  property :notes, String
+  # We get rid of attr_accessor and added properties from the DataMapper resource.
 
   # attr_accessor :id, :first_name, :last_name, :email, :notes
 
@@ -42,7 +43,7 @@ DataMapper.auto_upgrade!
 # is handed over to rolodex.rb.
 
 
-$rolodex = Rolodex.new
+# $rolodex = Rolodex.new
 # A route we made. For this particular URL and GET method this is the response.
 get '/' do
   # puts "Hello World"
@@ -56,6 +57,8 @@ end
 # Params hash collects information and is stored.
 
 get '/contacts' do
+  @contacts = Contact.all
+  # Shows all the contact from the database called contacts.
   erb :contacts
 end
 # The get request routes to the views /contacts
@@ -66,7 +69,7 @@ end
 # The get request routes to the views /new_contact which then redirects to post '/contacts'
 
 get '/contacts/:id/edit' do
-  @contact = $rolodex.find(params[:id].to_i)
+  @contact = Contact.get(params[:id].to_i)
   if @contact
     erb :edit_contact
   else
@@ -76,7 +79,7 @@ end
 # Rolodex finds the specific contact and goes to the views /contacts/id/edit which redirects as a put request.
 
 get '/contacts/:id' do
-  @contact = $rolodex.find(params[:id].to_i)
+  @contact = Contact.get(params[:id].to_i)
   if @contact
     erb :show_contact
   else
@@ -85,20 +88,25 @@ get '/contacts/:id' do
 end
 
 post '/contacts' do
-  new_contact = Contact.new(params[:first_name], params[:last_name], params[:email], params[:notes])
-  $rolodex.store_new_contact(new_contact)
+  new_contact = Contact.create(
+    first_name: params[:first_name],
+    last_name: params[:last_name],
+    email: params[:email],
+    notes: params[:notes]
+    )
   redirect to('/contacts')
 end
 # Stores new contacts to the contacts array.
 
 
 put '/contacts/:id' do
-  @contact = $rolodex.find(params[:id].to_i)
+  @contact = Contact.get(params[:id].to_i)
   if @contact
     @contact.first_name = params[:first_name]
     @contact.last_name = params[:last_name]
     @contact.email = params[:email]
     @contact.notes = params[:notes]
+    @ontact.save
     redirect to ("/contacts")
   else
     raise Sinatra::NotFound
@@ -106,16 +114,14 @@ put '/contacts/:id' do
 end
 
 delete '/contacts/:id' do
-  @contact = $rolodex.find(params[:id].to_i)
+  @contact = Contact.get(params[:id].to_i)
   if @contact
-    $rolodex.delete_contact(@contact)
+    @contact.destroy
     redirect to("/contacts")
   else
     raise Sinatra::NotFound
   end
 end
-
-
 
 # get '/:name' do
 #   @name = params[:name].capitalize
