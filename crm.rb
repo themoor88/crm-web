@@ -1,9 +1,46 @@
-require_relative 'rolodex'
 require_relative 'contact'
+require_relative 'rolodex'
 require 'sinatra'
 require 'data_mapper'
 
 DataMapper.setup(:default, "sqlite3:database.sqlite3")
+
+class Contact
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :first_name, Serial
+  property :last_name, Serial
+  property :email, Serial
+  property :notes, Serial
+
+  # attr_accessor :id, :first_name, :last_name, :email, :notes
+
+  # def initialize(first_name, last_name, email, notes)
+  #   @first_name = first_name
+  #   @last_name = last_name
+  #   @email = email
+  #   @notes = notes
+  # end
+
+  # def to_s
+  #   "First Name: #{@first_name} " +
+  #   "Last Name: #{@last_name} " +
+  #   "Email: #{@email} " +
+  #   "Notes: #{@notes} " +
+  #   "Contact ID: #{@id}"
+  # end
+end
+
+DataMapper.finalize
+DataMapper.auto_upgrade!
+
+# Here we are defining the Contact class. Each instantiation will represent
+# a single contact with the five attributes as data. We let id be a method
+# so it can be accessible to our database Rolodex. The contact is not reponsible
+# setting their own id. Rolodex is reponsible for this and thus the responsiblity
+# is handed over to rolodex.rb.
+
 
 $rolodex = Rolodex.new
 # A route we made. For this particular URL and GET method this is the response.
