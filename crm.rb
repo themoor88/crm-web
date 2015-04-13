@@ -1,6 +1,9 @@
 require_relative 'rolodex'
 require_relative 'contact'
 require 'sinatra'
+require 'data_mapper'
+
+DataMapper.setup(:default, "sqlite3:database.sqlite3")
 
 $rolodex = Rolodex.new
 # A route we made. For this particular URL and GET method this is the response.
