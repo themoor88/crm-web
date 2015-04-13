@@ -38,4 +38,5 @@ end
 # This defines a new class called Rolodex and initializes two new instance variables
 # called @contacts and @id. @contacts is the array of all of the contacts. contact
 # is a single entry of the array composed of the elements of the object. These methods
-# can change the values of Rolodex but Rolodex protects contacts from the outside.
+# can change the values of Rolodex but Rolodex protects contacts from the outside. Rolodex
+# can be considered the database which searches using the @id.

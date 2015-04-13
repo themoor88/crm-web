@@ -18,16 +18,12 @@ end
 get '/contacts' do
   erb :contacts
 end
+# The get request routes to the views /contacts
 
 get '/contacts/new' do
   erb :new_contact
 end
-
-post '/contacts' do
-  new_contact = Contact.new(params[:first_name], params[:last_name], params[:email], params[:notes])
-  $rolodex.store_new_contact(new_contact)
-  redirect to('/contacts')
-end
+# The get request routes to the views /new_contact which then redirects to post '/contacts'
 
 get '/contacts/:id/edit' do
   @contact = $rolodex.find(params[:id].to_i)
@@ -37,6 +33,24 @@ get '/contacts/:id/edit' do
     raise Sinatra::NotFound
   end
 end
+# Rolodex finds the specific contact and goes to the views /contacts/id/edit which redirects as a put request.
+
+get '/contacts/:id' do
+  @contact = $rolodex.find(params[:id].to_i)
+  if @contact
+    erb :show_contact
+  else
+    raise Sinatra::NotFound
+  end
+end
+
+post '/contacts' do
+  new_contact = Contact.new(params[:first_name], params[:last_name], params[:email], params[:notes])
+  $rolodex.store_new_contact(new_contact)
+  redirect to('/contacts')
+end
+# Stores new contacts to the contacts array.
+
 
 put '/contacts/:id' do
   @contact = $rolodex.find(params[:id].to_i)
@@ -61,18 +75,11 @@ delete '/contacts/:id' do
   end
 end
 
-get '/contacts/:id' do
-  @contact = $rolodex.find(params[:id].to_i)
-  if @contact
-    erb :show_contact
-  else
-    raise Sinatra::NotFound
-  end
-end
+
 
 # get '/:name' do
 #   @name = params[:name].capitalize
-  # Instance variable so it can be used outside of the route.
+  # Instance variable so it can be used outside of the route by the views.
   # Captures the key value from the params hash.
   # Can put symbol instead of string.
   # :name is a wildcard and params will store it in that hash.
