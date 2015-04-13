@@ -17,17 +17,17 @@ class Rolodex
   end
 
   def modify_contact(contact, attribute, new_attribute)
-      if attribute == "first name"
-        contact.first_name = new_attribute
-      elsif attribute == "last name"
-        contact.last_name = new_attribute
-      elsif attribute == "email"
-        contact.email = new_attribute
-      elsif attribute == "notes"
-        contact.notes = new_attribute
-      else
-        puts "That is an invalid attribute."
-      end
+    if attribute == "first name"
+      contact.first_name = new_attribute
+    elsif attribute == "last name"
+      contact.last_name = new_attribute
+    elsif attribute == "email"
+      contact.email = new_attribute
+    elsif attribute == "notes"
+      contact.notes = new_attribute
+    else
+      puts "That is an invalid attribute."
+    end
   end
 
   def delete_contact(contact)
@@ -40,3 +40,6 @@ end
 # is a single entry of the array composed of the elements of the object. These methods
 # can change the values of Rolodex but Rolodex protects contacts from the outside. Rolodex
 # can be considered the database which searches using the @id.
+
+# Now the Rolodex is replaced my DataMapper, an ORM that uses SQLite3 to create,
+# read, update or delete using a database.

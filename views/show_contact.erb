@@ -1,4 +1,5 @@
 <h1><%= @contact.first_name %> <%= @contact.last_name %></h1>
+
 <p><strong>Email:</strong><%= @contact.email %></p>
 <p><strong>Note:</strong><%= @contact.notes %></p>
 <p><a href = "/contacts/<%= @contact.id %>/edit">Edit</a></p>
@@ -8,6 +9,9 @@
   <input type="submit" value="Delete Contact">
 </form>
 
+<p>
+  <a href = "/">Return to Main Menu</a>
+</p>
 
 <!-- Here we add an Edit link and a Delete button. The value is what will be written
 on the button. The alligator clips can be used inside the html text file. In this case @contact
