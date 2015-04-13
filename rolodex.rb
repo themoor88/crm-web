@@ -7,26 +7,8 @@ class Rolodex
   end
 
   def find(contact_id)
-    @contacts.find do |contact|
-      contact.id == contact_id
-    end
+    @contacts.find { |contact| contact.id == contact_id}
   end
-
-  # def search(query)
-  #   if query == "first name"
-  #   @contacts.select do |contact|
-  #     contact.first_name == first_name
-  #   elsif query == "first name"
-  #   @contacts.select do |contact|
-  #     contact.first_name == first_name
-  #   elsif query == "first name"
-  #   @contacts.select do |contact|
-  #     contact.first_name == first_name
-  #   elsif query == "first name"
-  #   @contacts.select do |contact|
-  #     contact.first_name == first_name
-  #   end
-  # end
 
   def store_new_contact(contact)
     contact.id = @id
@@ -48,9 +30,12 @@ class Rolodex
       end
   end
 
-  def delete_contact(contact_id)
-    @contacts.delete_if do |contact|
-    contact.id == contact_id
-    end
+  def delete_contact(contact)
+    @contacts.delete(contact)
   end
 end
+
+# This defines a new class called Rolodex and initializes two new instance variables
+# called @contacts and @id. @contacts is the array of all of the contacts. contact
+# is a single entry of the array composed of the elements of the object. These methods
+# can change the values of Rolodex but Rolodex protects contacts from the outside.

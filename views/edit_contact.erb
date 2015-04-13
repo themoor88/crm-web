@@ -1,0 +1,14 @@
+<h1>Edit a Contact</h1>
+
+<form action="/contacts/<%= @contact.id %>" method="post">
+  <input type="hidden" name="_method" value="put">
+  <input type="text" name="first_name" value="<%= @contact.first_name %>">
+  <input type="text" name="last_name" value="<%= @contact.last_name %>">
+  <input type="text" name="email" value="<%= @contact.email %>">
+  <input type="text" name="notes" value="<%= @contact.notes %>">
+  <input type="submit" name="Submit">
+</form>
+
+<!-- This form uses the instance variable @contact from crm.rb which allows for leaking.
+@contact refers to a group of elements but only one array entry. We are changing the values
+using the put value, hidden by the post method. -->
